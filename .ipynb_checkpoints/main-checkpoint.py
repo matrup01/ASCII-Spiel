@@ -3,18 +3,27 @@ import player
 import map
 import namegenerator
 import colors
+import event
 
 run = True
 menu = True
 gamestart = False
 firststage = False
 greetings = False
+overworld = False
 battle = False
+merchant = False
+info = False
+treasure = False
+boss = False
 
 player = player.Player()
-map = map.Map(31,7)
+map = map.Map(41,9)
 generator = namegenerator.Names()
 realm = generator.realmname()
+king = generator.malepersonname()
+event = event.Event()
+colorer = colors.Colormap()
 
 def fullclear():
     os.system("cls")
@@ -54,7 +63,16 @@ def offsetprint(line,off):
         output += " "
     output += line
     print(output)
-    
+
+def exitgame():
+    print("Spiel verlassen?")
+    confirm = input(">")
+    confirm = confirm.capitalize()
+    if confirm == "Ja" or confirm == "J" or confirm == "Y" or confirm == "Q":
+        quit()
+    else: 
+        pass
+
 while run:
     while menu:
         fullclear()
@@ -93,49 +111,92 @@ while run:
         gamestart = False
         firststage = True
         greetings = True
-        map.playerset(15,6)
+        overworld = True
+        map.playerset(20,8)
+        map.generate()
+        clear()
 
     while firststage:
-        clear()
-        if not battle:
+        if overworld:
             if greetings:
-                move = input("Willkommen im Königreich " + realm + "! >")
+                move = input("Willkommen im Königreich " + realm + ", in dem König " + king + " herrscht! >")
                 greetings = False
             else:
                 move = input(">")
-                if move == "w":
-                    map.playerup()
+                if move == "q":
+                    exitgame()
+                elif move == "w" or move == "a" or move == "s" or move == "d":
+                    if move == "w":
+                        map.playerup()
+                    elif move == "a":
+                        map.playerleft()
+                    elif move == "s":
+                        map.playerdown()
+                    elif move == "d":
+                        map.playerright()
                     clear()
-                elif move == "a":
-                    map.playerleft()
-                    clear()
-                elif move == "s":
-                    map.playerdown()
-                    clear()
-                elif move == "d":
-                    map.playerright()
-                    clear()
-                elif move == "q":
-                    print("Spiel verlassen?")
-                    confirm = input(">")
-                    confirm = confirm.capitalize()
-                    if confirm == "Ja" or confirm == "J":
-                        quit()
-                elif move == "b":
-                        battle = True
+                    if map.getstatus()[3]:
+                        eventpicker = event.select(map.getstatus())
+                        overworld = False
+                        if eventpicker == 0:
+                            battle = True
+                        elif eventpicker == 1:
+                            merchant = True
+                        elif eventpicker == 2:
+                            info = True
+                        elif eventpicker == 3:
+                            treasure = True
+                        elif eventpicker == 4:
+                            boss = True
+                        map.setvisited()
                 else:
                     continue
         if battle:
             print("Kampf!!")
             move = input (">")
             if move == "m":
-                battle = False
+                battle =False
+                overworld = True
             elif move == "q":
-                print("Spiel verlassen?")
-                confirm = input(">")
-                confirm = confirm.capitalize()
-                if confirm == "Ja" or confirm == "J":
-                    quit()
+                exitgame()
             else:
                 continue
+        if merchant:
+            print("Händler")
+            move = input (">")
+            if move == "m":
+                merchant = False
+                overworld = True
+            elif move == "q":
+                exitgame()
+            else:
+                continue
+        if info:
+            print("Heftige Hintergrundgeschichte (noch in Arbeit)")
+            input(">")
+            info = False
+            overworld = True
+            clear()
+        if treasure:
+            print("Schatz")
+            move = input (">")
+            if move == "m":
+                treasure = False
+                overworld = True
+            elif move == "q":
+                exitgame()
+            else:
+                continue
+        if boss:
+            colorer.printcolor("Boss",3)
+            move = input (">")
+            if move == "m":
+                boss = False
+                overworld = True
+            elif move == "q":
+                exitgame()
+            else:
+                continue
+              
+            
 

@@ -1,0 +1,13 @@
+0 --> Leeres Feld: .                      Platzhalter
+1 --> Wasser: ~ in hellblau               Detail
+2 --> Wiese: w in hellgrün                Vordergrund            
+3 --> Wald: 8 in grün                     Detail
+4 --> Berge: A in weiß                    Detail
+5 --> Steppe: . in braun                  Vordergrund             
+6 --> Dorf: H in light blueish gray       Detail
+7 --> Wüste: S in gelb                    Vordergrund
+8 --> Hügel: a in hellgrau                Detail
+9 --> Lavasee: ~ in hellrot               Detail
+10--> Geröllebene: G in grau              Detail
+11--> Friedhof: t in dunkelgrau           Detail 2
+12--> Burg: B in light blueish gray       Detail 2
