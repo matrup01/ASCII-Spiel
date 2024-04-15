@@ -43,9 +43,21 @@ def line(length,offset):
 
 def clear():
     os.system("cls")
-    print(player.titlename + " von " + realm + " (Lvl.: " + str(player.lvl) + "): ")
-    print("HP: " + str(player.currenthp) + "/" + str(player.maxhp) + player.gethealthbar(3,28))
-    print("XP: " + str(player.xp) + player.getxpbar(7,28))
+    print("  " + player.titlename + " von " + realm + " (Lvl.: " + str(player.lvl) + "): ")
+    print("  HP: " + str(player.currenthp) + "/" + str(player.maxhp) + player.gethealthbar(3,29))
+    print("  XP: " + str(player.xp) + player.getxpbar(7,29))
+    if player.gold < 10:
+        offset1 = "   "
+    elif player.gold < 100:
+        offset1 = "  "
+    elif player.gold < 1000:
+        offset1 = " "
+    else:
+        offset1 = ""
+    potions = colorer.returncolor("I",7) * player.potions
+    rest = 22 - player.maxpotions
+    offset2 = rest * " "
+    print("  Gold: " + str(player.gold) + offset1 + "  Tränke:" + offset2 + potions)
     map.printmap()
 
 def maketitle(): #ASCII-Art mit https://ascii.today/ erstellt
@@ -71,9 +83,31 @@ def exitgame():
     confirm = input(">")
     confirm = confirm.capitalize()
     if confirm == "Ja" or confirm == "J" or confirm == "Y" or confirm == "Q":
+        os.system("cls")
         quit()
     else: 
         pass
+
+def options():
+    print("w,a,s,d  ...   Bewege dich über die Karte")
+    print("j,n      ...   Beantworte Fragen mit ja/nein")
+    print("q        ...   Beende das Spiel")
+    print("i        ...   Zeige das eigene Inventar")
+    print("h        ...   Nutze einen Heiltrank")
+    print("o        ...   Zeigt alle möglichen Befehle an")
+
+def deathscreen():
+    col = 3
+    colorer.printcolor("       ___  _  _    ___  _ ____ ___ ",col)
+    colorer.printcolor("       |  \ |  |    |__] | [__   |",col)
+    colorer.printcolor("       |__/ |__|    |__] | ___]  |",col)
+    colorer.printcolor("____ ____ ____ ___ ____ ____ ___  ____ _  _ ",col)
+    colorer.printcolor("| __ |___ [__   |  |  | |__/ |__] |___ |\ | ",col)
+    colorer.printcolor("|__] |___ ___]  |  |__| |  \ |__] |___ | \|",col)
+    input()
+    input("Zum Beenden Taste drücken")
+    os.system("cls")
+    quit()
 
 while run:
     while menu:
@@ -92,9 +126,11 @@ while run:
             gamestart = True
         elif choice == "2":
             fullclear()
-            print("w,a,s,d  ...   Bewege dich über die Karte")
-            print("j,n      ...   Beantworte Fragen mit ja/nein")
-            print("q        ...   Beende das Spiel")
+            print("Befehle in der Overworld:")
+            print("")
+            options()
+            print("")
+            print("WICHTIG -- Alle Befehle müssen mit Enter bestätigt werden!")
             input(">")
         elif choice == "3":
             fullclear()
@@ -135,6 +171,7 @@ while run:
                 move = input(">")
                 if move == "q":
                     exitgame()
+                    clear()
                 elif move == "w" or move == "a" or move == "s" or move == "d":
                     if move == "w":
                         map.playerup()
@@ -159,10 +196,21 @@ while run:
                         elif eventpicker == 4:
                             boss = True
                         map.setvisited()
-                elif move == "x":
-                    print("10XP erhalten")
-                    player.earnxp(10)
+                elif move == "i":
+                    player.printequip()
+                    input(">")
                     clear()
+                elif move == "h":
+                    if player.potions > 0:
+                        player.currenthp = player.maxhp
+                        player.potions -= 1
+                    else: 
+                        pass
+                    clear()
+                elif move == "o":
+                    options()
+                elif move == "g":
+                    deathscreen()
                 else:
                     continue
         if battle:
@@ -173,6 +221,7 @@ while run:
                 overworld = True
             elif move == "q":
                 exitgame()
+                clear()
             else:
                 continue
         if merchant:

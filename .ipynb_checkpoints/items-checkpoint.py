@@ -82,3 +82,72 @@ class Shield(Weapon):
                 self.stats[6] += j * 0.5
             elif choice == 1:
                 self.stats[7] += j
+
+
+class Armor:
+    def __init__(self,power,rareness):
+        self.rareness = rareness
+        self.defense = power * self.rareness
+        self.name = ""
+        self.colorer = colors.Colormap()
+        if self.rareness == 3:
+            self.name = self.colorer.returncolor("Legendäre Rüstung",6)
+        elif self.rareness == 2:
+            self.name = self.colorer.returncolor("Rüstung",9)
+        elif self.rareness == 1:
+            self.name = self.colorer.returncolor("Rüstung",5)
+        else:
+            self.name = "Rüstung"
+
+    def printstats(self,off):
+        offset = off * " "
+        print(offset + self.name + ":")
+        offset += 5 * " "
+        print(offset + "Verteidigung: " + str(self.defense))
+
+class Shoes:
+    def __init__(self,power,rareness):
+        self.rareness = rareness
+        self.speed = power * self.rareness
+        self.name = ""
+        self.colorer = colors.Colormap()
+        if self.rareness == 3:
+            self.name = self.colorer.returncolor("Legendäre Schuhe",6)
+        elif self.rareness == 2:
+            self.name = self.colorer.returncolor("Schuhe",9)
+        elif self.rareness == 1:
+            self.name = self.colorer.returncolor("Schuhe",5)
+        else:
+            self.name = "Schuhe"
+
+    def printstats(self,off):
+        offset = off * " "
+        print(offset + self.name + ":")
+        offset += 5 * " "
+        print(offset + "Geschwindigkeit: " + str(self.speed))
+
+class Helmet:
+    def __init__(self,power,rareness):
+        self.rareness = rareness
+        self.defense = power
+        self.evasiveness = self.rareness * 0.1
+        self.name = ""
+        self.colorer = colors.Colormap()
+        if self.rareness == 3:
+            self.name = self.colorer.returncolor("Legendärer Helm",6)
+        elif self.rareness == 2:
+            self.name = self.colorer.returncolor("Helm",9)
+        elif self.rareness == 1:
+            self.name = self.colorer.returncolor("Helm",5)
+        else:
+            self.name = "Helm"
+
+    def printstats(self,off):
+        offset = off * " "
+        print(offset + self.name + ":")
+        offset += 5 * " "
+        print(offset + "Verteidigung: " + str(self.defense))
+        prozentevasiveness = round(self.evasiveness * 100,1)
+        print(offset + "Ausweichwert: " + str(prozentevasiveness) + "%")
+        
+        
