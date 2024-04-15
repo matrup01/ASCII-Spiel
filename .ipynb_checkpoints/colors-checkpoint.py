@@ -1,8 +1,8 @@
 import numpy as np
 
-class Colorpallet:
+class Colormap:
     def __init__(self): 
-        self.colors = np.array([[0,30],[1,30],[0,31],[1,31],[0,32],[1,32],[0,33],[1,33],[0,34],[1,34],[0,35],[1,35],[0,36],[1,36],[0,37],[1,37],[0,0]])
+        self.colors = np.array([[0,30],[1,30],[0,31],[1,31],[0,32],[1,32],[0,33],[1,33],[0,34],[1,34],[0,35],[1,35],[0,36],[1,36],[0,37],[1,37],[0,0],[0,41],[0,44]])
         #0 --> grau
         #1 --> dunkelgrau
         #2 --> hellrot
@@ -20,6 +20,8 @@ class Colorpallet:
         #14 --> hellgrau
         #15 --> light blueish gray
         #16 --> weiß/standard
+        #17 --> roter Hintergrund
+        #18 --> blauer Hintergrund
     
     def printcolor(self,line,col):
         if col == 16:

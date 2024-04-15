@@ -17,3 +17,31 @@ class Names:
         rand = random.randrange(len(namelist))
         name = namelist[rand]
         return name
+
+    def femalepersonname(self):
+        namelist = ["Fulke"]
+
+        rand = random.randrange(len(namelist))
+        name = namelist[rand]
+        return name
+
+    def swordname(self):
+        namelist = ["Ashrune","Omega","Sturmbringer","Dunkelklinge","Inferno"]
+
+        rand = random.randrange(len(namelist))
+        name = namelist[rand]
+        return name
+
+    def shieldname(self):
+        namelist = ["Platzhalter1","Platzhalter2"]
+
+        rand = random.randrange(len(namelist))
+        name = namelist[rand]
+        return name
+
+    def mtitles(self):
+        titlelist = ["der Schöne","der Starke","der Dicke","der Wilde","der Grausame","der Gerechte","der Feige","der Mutige","der Drachentöter","Bärenbruder","Löwenreiter"]
+
+        rand = random.randrange(len(titlelist))
+        title = titlelist[rand]
+        return title

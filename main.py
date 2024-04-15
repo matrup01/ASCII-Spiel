@@ -22,6 +22,7 @@ map = map.Map(41,9)
 generator = namegenerator.Names()
 realm = generator.realmname()
 king = generator.malepersonname()
+kingtitle = generator.mtitles()
 event = event.Event()
 colorer = colors.Colormap()
 
@@ -42,8 +43,9 @@ def line(length,offset):
 
 def clear():
     os.system("cls")
-    print(player.titlename + " von " + realm + ": ")
-    print("HP: " + str(player.currenthp) + "/" + str(player.maxhp))
+    print(player.titlename + " von " + realm + " (Lvl.: " + str(player.lvl) + "): ")
+    print("HP: " + str(player.currenthp) + "/" + str(player.maxhp) + player.gethealthbar(3,28))
+    print("XP: " + str(player.xp) + player.getxpbar(7,28))
     map.printmap()
 
 def maketitle(): #ASCII-Art mit https://ascii.today/ erstellt
@@ -108,6 +110,14 @@ while run:
         print("Gib deinen Namen ein")
         nameask = input(">")
         player.setname(str(nameask))
+        gendersetup = True
+        while gendersetup:
+            print("Bist du eine Frau oder ein Mann?")
+            genderask = input("m/w  >")
+            genderask = genderask.capitalize()
+            if genderask == "M" or genderask == "W" or genderask == "F":
+                player.setgender(genderask)
+                gendersetup = False
         gamestart = False
         firststage = True
         greetings = True
@@ -119,7 +129,7 @@ while run:
     while firststage:
         if overworld:
             if greetings:
-                move = input("Willkommen im Königreich " + realm + ", in dem König " + king + " herrscht! >")
+                move = input("Willkommen im Königreich " + realm + ", in dem König " + king + " " + kingtitle + " herrscht! >")
                 greetings = False
             else:
                 move = input(">")
@@ -149,6 +159,10 @@ while run:
                         elif eventpicker == 4:
                             boss = True
                         map.setvisited()
+                elif move == "x":
+                    print("10XP erhalten")
+                    player.earnxp(10)
+                    clear()
                 else:
                     continue
         if battle:
