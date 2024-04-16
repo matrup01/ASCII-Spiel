@@ -1,7 +1,7 @@
 titlerep für Player
 
 Kämpfe:
-    alle Sondereffekte
+    alle Sondereffekte + Spezialeffekte
     Genauigkeit von Waffen
 
 Storys zu allen Waffennamen mit Geschichte

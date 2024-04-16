@@ -5,21 +5,28 @@ class Names:
         self.realm = ""
 
     def realmname(self): # --> self.realm
-        realmlist = ["Iohitha","Lessearona", "Iaccorah","Stayitika","Geaglonet","Waebrajan","Eonnialas","Flobadale","Giabola","Kraworial","Keniorona","Klorrurat","Opheven","Kreomemund","Earizan","Lajania","Biwerus","Tiapponia","Zumusos","Reasala","Erilar","Safenica","Icromos","Eokitora","Diafunata","Axerim","Ivirath","Iadiolar","Fiodovar","Eareagoth","Iappimund","Sabrodell","Iakotara","Fiadducia","Astrearia","Otegus","Eorrinor","Iapuriel","Anuzan","Eoridran","Ezirhia","Iahuthas","Naemutria","Igunia","Fladealyn","Dochipia","Jeoforos","Iatezan","Vaxeorea","Leakadolon","Ibethan","Irunol","Ianotika","Onniroth","Harogrim","Utemond","Fittemor","Eabilas","Aetinor","Arramar","Ioshisos","Fuhidin","Taepition"]
+        realmlist = ["Iohitha","Lessearona", "Iaccorah","Stayitika","Geaglonet","Waebrajan","Eonnialas","Flobadale","Giabola","Kraworial","Keniorona","Klorrurat","Opheven","Kreomemund","Earizan","Lajania","Biwerus","Tiapponia","Zumusos","Reasala","Erilar","Safenica","Icromos","Eokitora","Diafunata","Axerim","Ivirath","Iadiolar","Fiodovar","Eareagoth","Iappimund","Sabrodell","Iakotara","Fiadducia","Astrearia","Otegus","Eorrinor","Iapuriel","Anuzan","Eoridran","Ezirhia","Iahuthas","Naemutria","Igunia","Fladealyn","Dochipia","Jeoforos","Iatezan","Vaxeorea","Leakadolon","Ibethan","Irunol","Ianotika","Onniroth","Harogrim","Utemond","Fittemor","Eabilas","Aetinor","Arramar","Ioshisos","Fuhidin","Taepition","Diavunor","Tloloxar","Apithae","Emethra","Faealanatha","Notixath","Iredin","Aviotika","Ukkozan","Ossomos","Axodran","Keviatia","Iglogoth","Blissinia","Niglothan"]
 
         rand = random.randrange(len(realmlist))
         self.realm = realmlist[rand]
         return self.realm
 
+    def villagename(self):
+        namelist = ["Laesaspea","Babrenet","Vexolith","Halvogor"]
+
+        rand = random.randrange(len(namelist))
+        name = namelist[rand]
+        return name
+
     def malepersonname(self):
-        namelist = ["Hugolinus","Tetbald","Gwychardus","Siegbert","Heribert","Gwyn","Daymiosus","Balian","Thyon","Otho","Simkin","Hieronymus","Skaat","Reinoldus","Abel","Godfrey","Melcher","Urianus","Guilhelm","Imbart","Dederic","Ernisius","Merek","Anselm","Ranulfo","Berogrim","Ingraham","Melmidoc","Arthurius","Umfried","Bregormir","Gorm","Urobe","Reynfred","Aegidius","Albrecht","Balduin","Blancheflor","Bosomil","Bredelin","Feist","Gallus","Gerlach","Halmann","Helfrich","Herburgar","Hilging","Marquard","Rainald","Saladin","Zolner","Ingward","Lautrec","Oswald","Kindred","Havel","Tarkus","Atreus","Ibor","Evarin","Olurgo","Thorbjörn","Rimort","Aethor","Axor","Jeofor","Izar","Barromir","Olimar","Rambroch","Iorith","Ironar","Immerich","Peregrinus","Gothowick","Utherich","Mariannus","Dagomar","Bebor","Vexolith","Horomar","Leogrith","Aethelsthaed","Arkadius","Sirius","Severus"]
+        namelist = ["Hugolinus","Tetbald","Gwychardus","Siegbert","Heribert","Gwyn","Daymiosus","Balian","Thyon","Otho","Simkin","Hieronymus","Skaat","Reinoldus","Abel","Godfrey","Melcher","Urianus","Guilhelm","Imbart","Dederic","Ernisius","Merek","Anselm","Ranulfo","Berogrim","Ingraham","Melmidoc","Arthurius","Umfried","Bregormir","Gorm","Urobe","Reynfred","Aegidius","Albrecht","Balduin","Blancheflor","Bosomil","Bredelin","Feist","Gallus","Gerlach","Halmann","Helfrich","Herburgar","Hilging","Marquard","Rainald","Saladin","Zolner","Ingward","Lautrec","Oswald","Kindred","Havel","Tarkus","Atreus","Ibar","Evarin","Olurgo","Thorbjörn","Rimort","Aethor","Axor","Jeofor","Izar","Barromir","Olimar","Rambroch","Iorith","Ironar","Immerich","Peregrinus","Gothowick","Utherich","Mariannus","Dagomar","Bebor","Horomar","Leogrith","Aethelsthaed","Arkadius","Sirius","Severus","Frodokar","Malchus","Pygmar","Perelman","Ottomel","Miglor","Brilgamer","Geosibor","Ganther","Uzulk","Ervas",]
 
         rand = random.randrange(len(namelist))
         name = namelist[rand]
         return name
 
     def femalepersonname(self):
-        namelist = ["Fulke","Aethelswith","Gorra",]
+        namelist = ["Fulke","Aethelswith","Gorra","Nooda","Merlina","Modelheid","Lyona","Rubia","Reyma","Ibor","Grea"]
 
         rand = random.randrange(len(namelist))
         name = namelist[rand]
@@ -54,7 +61,7 @@ class Names:
         return name
 
     def mtitles(self):
-        titlelist = ["der Schöne","der Starke","der Dicke","der Wilde","der Grausame","der Gerechte","der Feige","der Mutige","der Drachentöter","Bärenbruder","Löwenreiter","der Fels","der Mächtige","der Schwache","der Giftmischer","der Riese","der Kurze","der Brudermörder","der Säufer","der Aufrichtige","der Tugendhafte","der Rachsüchtige","Eisenhaupt","Goldhand","Zwergenfreund","der Fuchs","der Kühne","der Wahnsinnige","der Berserker","der Weise","der Dumme","der Strenge"]
+        titlelist = ["der Schöne","der Starke","der Dicke","der Wilde","der Grausame","der Gerechte","der Feige","der Mutige","der Drachentöter","Bärenbruder","Löwenreiter","der Fels","der Mächtige","der Schwache","der Giftmischer","der Riese","der Kurze","der Brudermörder","der Säufer","der Aufrichtige","der Tugendhafte","der Rachsüchtige","Eisenhaupt","Goldhand","Zwergenfreund","der Fuchs","der Kühne","der Wahnsinnige","der Berserker","der Weise","der Dumme","der Strenge","der Große"]
 
         rand = random.randrange(len(titlelist))
         title = titlelist[rand]

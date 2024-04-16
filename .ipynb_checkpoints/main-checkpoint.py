@@ -4,6 +4,9 @@ import map
 import namegenerator
 import colors
 import event
+import blacksmiths
+import items
+import merchants
 
 run = True
 menu = True
@@ -16,13 +19,19 @@ merchant = False
 info = False
 treasure = False
 boss = False
+blacksmith = False
 
+getfacts = [0,0,0] #0-realm,1-king,2-kingtitle
 player = player.Player()
+player.gold = 20   # für Testzwecke/später wieder entfernen (Gold wird direkt in der Klasse vergeben)
 map = map.Map(41,9)
 generator = namegenerator.Names()
 realm = generator.realmname()
+getfacts[0] = realm
 king = generator.malepersonname()
+getfacts[1] = king
 kingtitle = generator.mtitles()
+getfacts[2] = kingtitle
 event = event.Event()
 colorer = colors.Colormap()
 
@@ -83,6 +92,7 @@ def exitgame():
     confirm = input(">")
     confirm = confirm.capitalize()
     if confirm == "Ja" or confirm == "J" or confirm == "Y" or confirm == "Q":
+        os.system("cls")
         quit()
     else: 
         pass
@@ -94,6 +104,7 @@ def options():
     print("i        ...   Zeige das eigene Inventar")
     print("h        ...   Nutze einen Heiltrank")
     print("o        ...   Zeigt alle möglichen Befehle an")
+    print("l        ...   Zeigt die Legende der Karte an")
 
 def deathscreen():
     col = 3
@@ -105,6 +116,7 @@ def deathscreen():
     colorer.printcolor("|__] |___ ___]  |  |__| |  \ |__] |___ | \|",col)
     input()
     input("Zum Beenden Taste drücken")
+    os.system("cls")
     quit()
 
 while run:
@@ -193,6 +205,8 @@ while run:
                             treasure = True
                         elif eventpicker == 4:
                             boss = True
+                        elif eventpicker == 5:
+                            blacksmith = True
                         map.setvisited()
                 elif move == "i":
                     player.printequip()
@@ -207,8 +221,14 @@ while run:
                     clear()
                 elif move == "o":
                     options()
-                elif move == "g":
-                    deathscreen()
+                elif move == "l":
+                    print("Legende:")
+                    print("")
+                    first = colorer.returncolor("x",3)
+                    print(first + "   ...   " + player.titlename + " von " + realm)
+                    map.printlegend()
+                    input(">")
+                    clear()
                 else:
                     continue
         if battle:
@@ -223,15 +243,38 @@ while run:
             else:
                 continue
         if merchant:
-            print("Händler")
-            move = input (">")
-            if move == "m":
+            if map.getstatus()[2] == 1:
+                mevent = merchants.Events(map.getstatus()[2],player,getfacts)
+                while mevent.stillgoing:
+                    clear()
+                    mevent.run()
+                    player = mevent.player
+                    merchant = False
+                    overworld = True
+            else: # so lange nicht bei allen tyles Inhalt ist
+                merch = merchants.Normal(player,5)
+                merchname = generator.femalepersonname()
+                print("Mein Name ist " + merchname + ". Willkommen in meinem bescheidenen Laden!")
+                input(">")
+                while not merch.leave:
+                    clear()
+                    merch.shop()
+                    player = merch.player
                 merchant = False
                 overworld = True
-            elif move == "q":
-                exitgame()
-            else:
-                continue
+                clear()
+        if blacksmith:
+            bsm = blacksmiths.Blacksmith(player)
+            bsmname = generator.malepersonname()
+            print("Mein Name ist " + bsmname + ". Ich behersche die hohe Kunst des Schmiedens. Stets zu Diensten!")
+            input(">")
+            while not bsm.leave:
+                clear()
+                bsm.offers()
+                player = bsm.player
+            blacksmith = False
+            overworld = True
+            clear()
         if info:
             print("Heftige Hintergrundgeschichte (noch in Arbeit)")
             input(">")

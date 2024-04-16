@@ -7,7 +7,7 @@ class Weapon:                                      #Weapons
     def __init__(self,power,rareness):
         self.rareness = rareness
         self.power = power
-        self.stats = np.array([0,0,0.5,0,0,0,0,0]) #0-->atk, 1-->def, 2-->acc, 3--> poison, 4--> burn, 5--> blut, 6--> reflect, 7--> thorns
+        self.stats = np.array([0,0,0.5,0,0,0,0,0,0,0,0]) #0-->atk, 1-->def, 2-->acc, 3--> poison, 4--> burn, 5--> blut, 6--> reflect, 7--> thorns, 8--> stun, 9-->spezialeffekt, 10--> life steal
         self.colorer = colors.Colormap()
         self.namegen = namegenerator.Names()
         self.name = ""
@@ -33,6 +33,13 @@ class Weapon:                                      #Weapons
             print(offset + self.colorer.returncolor("Reflektieren: ",13) + str(prozentreflekt) + "%")
         if self.stats[7] > 0:
             print(offset + self.colorer.returncolor("Dornen:       ",11) + str(self.stats[7]))
+        if self.stats[8] > 0 :
+            print(offset + self.colorer.returncolor("Betäubung:    ",14) + str(self.stats[8]))
+        if self.stats[9] == 1:
+            print(offset + self.colorer.returncolor("Giftheilung",4))
+        if self.stats[10] > 0:
+            prozentls = self.stats[10] * 100
+            print(offset + self.colorer.returncolor("Lebensentzug: ",3) + str(prozentls) + "%")
         
 
 class Sword(Weapon):
@@ -51,7 +58,7 @@ class Sword(Weapon):
             self.name = "Schwert"
         self.stats[2] = 0.95
         for i in range(self.rareness):
-            choice = random.randrange(3)
+            choice = random.randrange(4)
             j = i + 1
             if choice == 0:
                 self.stats[3] += j
@@ -59,6 +66,8 @@ class Sword(Weapon):
                 self.stats[4] += j
             elif choice == 2:
                 self.stats[5] += j
+            elif choice == 3:
+                self.stats[0] += 2 * j
 
 class Shield(Weapon):
     def __init__(self,power,rareness):
@@ -83,6 +92,59 @@ class Shield(Weapon):
             elif choice == 1:
                 self.stats[7] += j
 
+class Axe(Weapon):
+    def __init__(self,power,rareness):
+        super().__init__(power,rareness)
+        self.stats[0] = self.power
+        if self.rareness == 3:
+            self.hasname = True
+            self.name = self.colorer.returncolor(self.namegen.axename(),6)
+            self.name += self.colorer.returncolor(" (Legendäre Axt)",6)
+        elif self.rareness == 2:
+            self.name = self.colorer.returncolor("Axt",9)
+        elif self.rareness == 1:
+            self.name = self.colorer.returncolor("Axt",5)
+        else:
+            self.name = "Axt"
+        self.stats[2] = 0.9
+        for i in range(self.rareness):
+            choice = random.randrange(3)
+            j = i + 1
+            if choice == 0:
+                self.stats[5] += j
+            elif choice == 1:
+                self.stats[8] += 1
+            elif choice == 2:
+                self.stats[0] += (2 * j)
+
+class Dagger(Weapon):
+    def __init__(self,power,rareness):
+        super().__init__(power,rareness)
+        self.stats[0] = self.power
+        if self.rareness == 3:
+            self.hasname = True
+            self.name = self.colorer.returncolor(self.namegen.daggername(),6)
+            self.name += self.colorer.returncolor(" (Legendärer Dolch)",6)
+        elif self.rareness == 2:
+            self.name = self.colorer.returncolor("Dolch",9)
+        elif self.rareness == 1:
+            self.name = self.colorer.returncolor("Dolch",5)
+        else:
+            self.name = "Dolch"
+        self.stats[2] = 0.9
+        for i in range(self.rareness):
+            choice = random.randrange(3)
+            j = i + 1
+            if choice == 0:
+                self.stats[3] += j
+            elif choice == 1:
+                k = 1 / random.randrange(8,11)
+                self.stats[10] += j * k
+                self.stats[10] = round(self.stats[10],3)
+            elif choice == 2:
+                self.stats[5] += j
+            elif choice == 2:
+                self.stats[0] += (3 * j)
 
 class Armor:
     def __init__(self,power,rareness):

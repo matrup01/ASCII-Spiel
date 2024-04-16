@@ -15,8 +15,14 @@ class Player:
         self.currentxp = 0
         self.lvl = 1
         self.colorer = colors.Colormap()
-        self.lweapon = items.Weapon(0,0)
-        self.haslweapon = False
+        weaponizer = [random.randrange(3),random.randrange(1,5)]
+        if weaponizer[0] == 0:
+            self.lweapon = items.Dagger(weaponizer[1],0)
+        elif weaponizer[0] == 1:
+            self.lweapon = items.Axe(weaponizer[1],0)
+        else:
+            self.lweapon = items.Sword(weaponizer[1],0)
+        self.haslweapon = True
         self.rweapon = items.Weapon(0,0)
         self.hasrweapon = False
         self.armor = items.Armor(0,0)
@@ -87,17 +93,27 @@ class Player:
         output += "|"
         return output
 
-    def equipweapon(self,weapon):
-        if not self.haslweapon or not self.hasrweapon:
-            weapon.printstats(0)
-        else:
-            print("Ausgerüstet (Links):")
-            self.lweapon.printstats(5)
-            print("Ausgerüster (Rechts):")
-            self.rweapon.printstats(5)
-            print("Neu:")
-            weapon.printstats(5)
-        choice = input("Waffe ausrüsten? (j/n) >")
+    def equipweapon(self,weapon,forced = False):
+        if not forced:
+            if not self.haslweapon or not self.hasrweapon:
+                weapon.printstats(0)
+            else:
+                print("Ausgerüstet (Links):")
+                self.lweapon.printstats(5)
+                print("Ausgerüster (Rechts):")
+                self.rweapon.printstats(5)
+                print("Neu:")
+                weapon.printstats(5)
+            choice = input("Waffe ausrüsten? (j/n) >")
+        if forced:
+            choice = "j"
+            if self.haslweapon and self.hasrweapon:
+                print("Ausgerüstet (Links):")
+                self.lweapon.printstats(5)
+                print("Ausgerüster (Rechts):")
+                self.rweapon.printstats(5)
+                print("Neu:")
+                weapon.printstats(5)
         if choice == "j":
             if not self.haslweapon:
                 self.haslweapon = True
@@ -120,15 +136,18 @@ class Player:
         else:
             print(weapon.name + " wurde nicht ausgerüstet")
 
-    def equiparmor(self,armor):
-        if not self.hasarmor:
-            armor.printstats(0)
-        else:
-            print("Ausgerüstet:")
-            self.armor.printstats(5)
-            print("Neu:")
-            armor.printstats(5)
-        choice = input("Rüstung ausrüsten? (j/n) >")
+    def equiparmor(self,armor,forced = False):
+        if not forced:
+            if not self.hasarmor:
+                armor.printstats(0)
+            else:
+                print("Ausgerüstet:")
+                self.armor.printstats(5)
+                print("Neu:")
+                armor.printstats(5)
+            choice = input("Rüstung ausrüsten? (j/n) >")
+        if forced:
+            choice = "j"
         if choice == "j":
             self.hasarmor = True
             self.armor = armor
@@ -136,15 +155,18 @@ class Player:
         else:
             print(armor.name + " wurde nicht ausgerüstet")
 
-    def equipshoes(self,shoes):
-        if not self.hasshoes:
-            shoes.printstats(0)
-        else:
-            print("Ausgerüstet:")
-            self.shoes.printstats(5)
-            print("Neu:")
-            shoes.printstats(5)
-        choice = input("Schuhe ausrüsten? (j/n) >")
+    def equipshoes(self,shoes,forced = False):
+        if not forced:
+            if not self.hasshoes:
+                shoes.printstats(0)
+            else:
+                print("Ausgerüstet:")
+                self.shoes.printstats(5)
+                print("Neu:")
+                shoes.printstats(5)
+            choice = input("Schuhe ausrüsten? (j/n) >")
+        if forced:
+            choice = "j"
         if choice == "j":
             self.hasshoes = True
             self.shoes = shoes
@@ -152,15 +174,18 @@ class Player:
         else:
             print(shoes.name + " wurden nicht ausgerüstet")
 
-    def equiphelmet(self,helmet):
-        if not self.hashelmet:
-            helmet.printstats(0)
-        else:
-            print("Ausgerüstet:")
-            self.helmet.printstats(5)
-            print("Neu:")
-            helmet.printstats(5)
-        choice = input("Helm ausrüsten? (j/n) >")
+    def equiphelmet(self,helmet,forced = False):
+        if not forced:
+            if not self.hashelmet:
+                helmet.printstats(0)
+            else:
+                print("Ausgerüstet:")
+                self.helmet.printstats(5)
+                print("Neu:")
+                helmet.printstats(5)
+            choice = input("Helm ausrüsten? (j/n) >")
+        if forced:
+            choice = "j"
         if choice == "j":
             self.hashelmet = True
             self.helmet = helmet
@@ -174,21 +199,21 @@ class Player:
             print("     Linke Hand")
             self.lweapon.printstats(5)
         else:
-            print("     LEER (Linke Hand)")
+            print("     Linke Hand:   LEER")
         if self.hasrweapon:
             print("     Rechte Hand")
             self.rweapon.printstats(5)
         else:
-            print("     LEER (Rechte Hand)")
+            print("     Rechte Hand:  LEER")
         if self.hasarmor:
             self.armor.printstats(5)
         else:
-            print("     LEER (Rüstung)")
+            print("     Rüstung:      LEER")
         if self.hasshoes:
             self.shoes.printstats(5)
         else:
-            print("     LEER (Schuhe)")
+            print("     Schuhe:       LEER")
         if self.hashelmet:
             self.helmet.printstats(5)
         else:
-            print("     LEER (Helm)")
+            print("     Helm:         LEER")
