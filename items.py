@@ -11,6 +11,7 @@ class Weapon:                                      #Weapons
         self.colorer = colors.Colormap()
         self.namegen = namegenerator.Names()
         self.name = ""
+        self.type = ""
         self.hasname = False
         
 
@@ -29,7 +30,7 @@ class Weapon:                                      #Weapons
         if self.stats[5] > 0:
             print(offset + self.colorer.returncolor("Blutung:      ",3) + str(self.stats[5]))
         if self.stats[6] > 0:
-            prozentreflekt = self.stats[6] * 100
+            prozentreflekt = int(round(self.stats[6] * 100,0))
             print(offset + self.colorer.returncolor("Reflektieren: ",13) + str(prozentreflekt) + "%")
         if self.stats[7] > 0:
             print(offset + self.colorer.returncolor("Dornen:       ",11) + str(self.stats[7]))
@@ -38,13 +39,14 @@ class Weapon:                                      #Weapons
         if self.stats[9] == 1:
             print(offset + self.colorer.returncolor("Giftheilung",4))
         if self.stats[10] > 0:
-            prozentls = self.stats[10] * 100
+            prozentls = int(round(self.stats[10] * 100,0))
             print(offset + self.colorer.returncolor("Lebensentzug: ",3) + str(prozentls) + "%")
         
 
 class Sword(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
+        self.type = "off"
         self.stats[0] = self.power
         if self.rareness == 3:
             self.hasname = True
@@ -73,6 +75,9 @@ class Sword(Weapon):
         self.stats[0] += n
         self.power += n
 
+    def setpower(self):
+        self.stats[0] = self.power
+
     def shufflestats(self):
         self.stats[0] = self.power
         self.stats[3] = 0
@@ -94,6 +99,7 @@ class Shield(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
         self.stats[1] = self.power
+        self.type = "def"
         if self.rareness == 3:
             self.hasname = True
             self.name = self.colorer.returncolor(self.namegen.shieldname(),6)
@@ -106,16 +112,21 @@ class Shield(Weapon):
             self.name = "Schild"
         self.stats[2] = 0.95
         for i in range(self.rareness):
-            choice = random.randrange(2)
+            choice = random.randrange(3)
             j = i + 1
             if choice == 0:
                 self.stats[6] += j * 0.5
             elif choice == 1:
                 self.stats[7] += j
+            elif choice == 2:
+                self.stats[1] += j
 
     def addpower(self,n):
         self.stats[1] += n
         self.power += n
+
+    def setpower(self):
+        self.stats[1] = self.power
 
     def shufflestats(self):
         self.stats[6] = 0
@@ -131,6 +142,7 @@ class Shield(Weapon):
 class Axe(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
+        self.type = "off"
         self.stats[0] = self.power
         if self.rareness == 3:
             self.hasname = True
@@ -157,6 +169,9 @@ class Axe(Weapon):
         self.stats[0] += n
         self.power += n
 
+    def setpower(self):
+        self.stats[0] = self.power
+
     def shufflestats(self):
         self.stats[0] = self.power
         self.stats[5] = 0
@@ -174,6 +189,7 @@ class Axe(Weapon):
 class Dagger(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
+        self.type = "off"
         self.stats[0] = self.power
         if self.rareness == 3:
             self.hasname = True
@@ -204,6 +220,9 @@ class Dagger(Weapon):
         self.stats[0] += n
         self.power += n
 
+    def setpower(self):
+        self.stats[0] = self.power
+
     def shufflestats(self):
         self.stats[0] = self.power
         self.stats[3] = 0
@@ -213,7 +232,10 @@ class Dagger(Weapon):
 class Armor:
     def __init__(self,power,rareness):
         self.rareness = rareness
-        self.defense = power * self.rareness
+        if self.rareness == 0:
+            self.defense = int(round(power * 0.5,0))
+        else:
+            self.defense = power * self.rareness
         self.name = ""
         self.colorer = colors.Colormap()
         self.upgradetimes = 0

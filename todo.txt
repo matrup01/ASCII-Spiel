@@ -5,3 +5,5 @@ Kämpfe:
     Genauigkeit von Waffen
 
 Storys zu allen Waffennamen mit Geschichte
+
+events für merchants

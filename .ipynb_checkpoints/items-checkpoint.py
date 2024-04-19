@@ -7,7 +7,7 @@ class Weapon:                                      #Weapons
     def __init__(self,power,rareness):
         self.rareness = rareness
         self.power = power
-        self.stats = np.array([0,0,0.5,0,0,0,0,0,0,0,0]) #0-->atk, 1-->def, 2-->acc, 3--> poison, 4--> burn, 5--> blut, 6--> reflect, 7--> thorns, 8--> stun, 9-->spezialeffekt, 10--> life steal
+        self.stats = np.array([0,0,0.5,0,0,0,0,0,0,0,0,0]) #0-->atk, 1-->def, 2-->acc, 3--> poison, 4--> burn, 5--> blut, 6--> reflect, 7--> thorns, 8--> stun, 9-->spezialeffekt, 10--> life steal, 11-->upgradetimes
         self.colorer = colors.Colormap()
         self.namegen = namegenerator.Names()
         self.name = ""
@@ -29,7 +29,7 @@ class Weapon:                                      #Weapons
         if self.stats[5] > 0:
             print(offset + self.colorer.returncolor("Blutung:      ",3) + str(self.stats[5]))
         if self.stats[6] > 0:
-            prozentreflekt = self.stats[6] * 100
+            prozentreflekt = int(round(self.stats[6] * 100,0))
             print(offset + self.colorer.returncolor("Reflektieren: ",13) + str(prozentreflekt) + "%")
         if self.stats[7] > 0:
             print(offset + self.colorer.returncolor("Dornen:       ",11) + str(self.stats[7]))
@@ -38,7 +38,7 @@ class Weapon:                                      #Weapons
         if self.stats[9] == 1:
             print(offset + self.colorer.returncolor("Giftheilung",4))
         if self.stats[10] > 0:
-            prozentls = self.stats[10] * 100
+            prozentls = int(round(self.stats[10] * 100,0))
             print(offset + self.colorer.returncolor("Lebensentzug: ",3) + str(prozentls) + "%")
         
 
@@ -69,6 +69,30 @@ class Sword(Weapon):
             elif choice == 3:
                 self.stats[0] += 2 * j
 
+    def addpower(self,n):
+        self.stats[0] += n
+        self.power += n
+
+    def setpower(self):
+        self.stats[0] = self.power
+
+    def shufflestats(self):
+        self.stats[0] = self.power
+        self.stats[3] = 0
+        self.stats[4] = 0
+        self.stats[5] = 0
+        for i in range(self.rareness):
+            choice = random.randrange(4)
+            j = i + 1
+            if choice == 0:
+                self.stats[3] += j
+            elif choice == 1:
+                self.stats[4] += j
+            elif choice == 2:
+                self.stats[5] += j
+            elif choice == 3:
+                self.stats[0] += 2 * j
+
 class Shield(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
@@ -84,6 +108,26 @@ class Shield(Weapon):
         else:
             self.name = "Schild"
         self.stats[2] = 0.95
+        for i in range(self.rareness):
+            choice = random.randrange(3)
+            j = i + 1
+            if choice == 0:
+                self.stats[6] += j * 0.5
+            elif choice == 1:
+                self.stats[7] += j
+            elif choice == 2:
+                self.stats[1] += j
+
+    def addpower(self,n):
+        self.stats[1] += n
+        self.power += n
+
+    def setpower(self):
+        self.stats[1] = self.power
+
+    def shufflestats(self):
+        self.stats[6] = 0
+        self.stats[7] = 0
         for i in range(self.rareness):
             choice = random.randrange(2)
             j = i + 1
@@ -107,6 +151,27 @@ class Axe(Weapon):
         else:
             self.name = "Axt"
         self.stats[2] = 0.9
+        for i in range(self.rareness):
+            choice = random.randrange(3)
+            j = i + 1
+            if choice == 0:
+                self.stats[5] += j
+            elif choice == 1:
+                self.stats[8] += 1
+            elif choice == 2:
+                self.stats[0] += (2 * j)
+
+    def addpower(self,n):
+        self.stats[0] += n
+        self.power += n
+
+    def setpower(self):
+        self.stats[0] = self.power
+
+    def shufflestats(self):
+        self.stats[0] = self.power
+        self.stats[5] = 0
+        self.stats[8] = 0
         for i in range(self.rareness):
             choice = random.randrange(3)
             j = i + 1
@@ -146,12 +211,26 @@ class Dagger(Weapon):
             elif choice == 2:
                 self.stats[0] += (3 * j)
 
+    def addpower(self,n):
+        self.stats[0] += n
+        self.power += n
+
+    def setpower(self):
+        self.stats[0] = self.power
+
+    def shufflestats(self):
+        self.stats[0] = self.power
+        self.stats[3] = 0
+        self.stats[5] = 0
+        self.stats[10] = 0
+
 class Armor:
     def __init__(self,power,rareness):
         self.rareness = rareness
         self.defense = power * self.rareness
         self.name = ""
         self.colorer = colors.Colormap()
+        self.upgradetimes = 0
         if self.rareness == 3:
             self.name = self.colorer.returncolor("Legendäre Rüstung",6)
         elif self.rareness == 2:
@@ -173,6 +252,7 @@ class Shoes:
         self.speed = power * self.rareness
         self.name = ""
         self.colorer = colors.Colormap()
+        self.upgradetimes = 0
         if self.rareness == 3:
             self.name = self.colorer.returncolor("Legendäre Schuhe",6)
         elif self.rareness == 2:
@@ -195,6 +275,7 @@ class Helmet:
         self.evasiveness = self.rareness * 0.1
         self.name = ""
         self.colorer = colors.Colormap()
+        self.upgradetimes = 0
         if self.rareness == 3:
             self.name = self.colorer.returncolor("Legendärer Helm",6)
         elif self.rareness == 2:

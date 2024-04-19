@@ -34,21 +34,11 @@ class Map:
             print(line)
         print(tbline)
 
-    def printtyletypes(self): #for debugging
-        list = ["=" for i in range(self.xlength)]
-        tbline = "0O"
-        for element in list:
-            tbline += element
-        tbline += "O0"
-        print(tbline)
+    def testevents(self,n): #for debugging
         for xarray in self.mapdata:
-            line = " |"
-            for xval in xarray:
-                tyle = str(xval[2])
-                line += tyle
-            line += "|"
-            print(line)
-        print(tbline)
+            for tyle in xarray:
+                tyle[0] = "?"
+                tyle[2] = int(n)
 
     def playerup(self):
         if self.playery != 0:

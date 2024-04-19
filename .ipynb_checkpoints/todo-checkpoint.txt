@@ -1,0 +1,9 @@
+titlerep für Player
+
+Kämpfe:
+    alle Sondereffekte + Spezialeffekte
+    Genauigkeit von Waffen
+
+Storys zu allen Waffennamen mit Geschichte
+
+events für merchants

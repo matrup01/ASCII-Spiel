@@ -7,6 +7,9 @@ import event
 import blacksmiths
 import items
 import merchants
+import loot
+import battles
+import infos
 
 run = True
 menu = True
@@ -208,6 +211,7 @@ while run:
                         elif eventpicker == 5:
                             blacksmith = True
                         map.setvisited()
+                        clear()
                 elif move == "i":
                     player.printequip()
                     input(">")
@@ -229,68 +233,63 @@ while run:
                     map.printlegend()
                     input(">")
                     clear()
+                elif move == "debug":
+                    tt = input("tyletype?")
+                    map.testevents(tt)
+                    clear()
                 else:
                     continue
         if battle:
-            print("Kampf!!")
-            move = input (">")
-            if move == "m":
-                battle =False
+            bevent = battles.Event(map.getstatus()[2],player,getfacts)
+            while bevent.stillgoing:
+                bevent.run()
+                player = bevent.player
+                if not bevent.battle.noclear:
+                    clear()
+                if player.currenthp <= 0:
+                    deathscreen()
+                battle = False
                 overworld = True
-            elif move == "q":
-                exitgame()
-                clear()
-            else:
-                continue
         if merchant:
-            if map.getstatus()[2] == 1:
-                mevent = merchants.Events(map.getstatus()[2],player,getfacts)
-                while mevent.stillgoing:
-                    clear()
-                    mevent.run()
-                    player = mevent.player
-                    merchant = False
-                    overworld = True
-            else: # so lange nicht bei allen tyles Inhalt ist
-                merch = merchants.Normal(player,5)
-                merchname = generator.femalepersonname()
-                print("Mein Name ist " + merchname + ". Willkommen in meinem bescheidenen Laden!")
-                input(">")
-                while not merch.leave:
-                    clear()
-                    merch.shop()
-                    player = merch.player
-                merchant = False
-                overworld = True
+            mevent = merchants.Event(map.getstatus()[2],player,getfacts)
+            while mevent.stillgoing:
+                mevent.run()
+                player = mevent.player
                 clear()
+                if player.currenthp <= 0:
+                    deathscreen()
+            merchant = False
+            overworld = True
         if blacksmith:
-            bsm = blacksmiths.Blacksmith(player)
-            bsmname = generator.malepersonname()
-            print("Mein Name ist " + bsmname + ". Ich behersche die hohe Kunst des Schmiedens. Stets zu Diensten!")
-            input(">")
-            while not bsm.leave:
+            bsevent = blacksmiths.Event(map.getstatus()[2],player,getfacts)
+            while bsevent.stillgoing:
+                bsevent.run()
+                player = bsevent.player
                 clear()
-                bsm.offers()
-                player = bsm.player
+                if player.currenthp <= 0:
+                    deathscreen()
             blacksmith = False
             overworld = True
-            clear()
         if info:
-            print("Heftige Hintergrundgeschichte (noch in Arbeit)")
-            input(">")
-            info = False
-            overworld = True
-            clear()
-        if treasure:
-            print("Schatz")
-            move = input (">")
-            if move == "m":
-                treasure = False
+            ievent = infos.Event(map.getstatus()[2],player,getfacts)
+            while ievent.stillgoing:
+                ievent.run()
+                player = ievent.player
+                clear()
+                if player.currenthp <= 0:
+                    deathscreen()
+                info = False
                 overworld = True
-            elif move == "q":
-                exitgame()
-            else:
-                continue
+        if treasure:
+            looter = loot.Event(map.getstatus()[2],player,getfacts)
+            while looter.stillgoing:
+                looter.run()
+                player = looter.player
+                clear()
+                if player.currenthp <= 0:
+                    deathscreen()
+            treasure = False
+            overworld = True
         if boss:
             colorer.printcolor("Boss",3)
             move = input (">")

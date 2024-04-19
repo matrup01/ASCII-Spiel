@@ -35,11 +35,20 @@ class Merchant:
         print("4.  Shop verlassen")
         choice = input(">")
         if choice == "1":
-            self.buy(0)
+            if not self.soldout[0]:
+                self.buy(0)
+            else:
+                pass
         elif choice == "2":
-            self.buy(1)
+            if not self.soldout[1]:
+                self.buy(1)
+            else:
+                pass
         elif choice == "3":
-            self.buy(2)
+            if not self.soldout[2]:
+                self.buy(2)
+            else:
+                pass
         elif choice == "4":
             self.leave = True
         else:
@@ -87,7 +96,7 @@ class Normal(Merchant):
 
 
 
-class Events:
+class Event:
     def __init__(self,tyletype,player,getfacts):
         self.player = player
         self.facts = getfacts #0-realm,1-king,2-kingtitle
@@ -95,14 +104,16 @@ class Events:
         self.merch = 0
         self.stillgoing = True
         self.generator = namegenerator.Names()
-        eventnumbers = [0,1,0,0,0,0,0,0,0,0,0,0,0] #Zuordnung siehe tyletypes.txt
+        eventnumbers = [1,1,1,1,1,1,1,1,1,1,1,1,1] #Zuordnung siehe tyletypes.txt
         eventpicker = random.randrange(eventnumbers[tyletype])
         self.eventloc = [tyletype,eventpicker]
 
     def run(self):
         if self.eventloc[0] == 0:                        # Platzhalter
-            pass
-        if self.eventloc[0] == 1:                        # Wasser
+            print("Platzhalter")
+            self.stillgoing = False
+            return
+        elif self.eventloc[0] == 1:                      # Wasser
             if self.eventloc[1] == 0:
                 if self.stage == 1:
                     origin = self.generator.villagename()
@@ -125,7 +136,7 @@ class Events:
                               "Ware überzeugen.'")
                         input(">")
                         self.stage = 2
-                        merch = Normal(self.player,self.player.lvl)
+                        self.merch = Normal(self.player,self.player.lvl)
                     elif self.player.titlerep <= -2:
                         print("An Deck des Schiffs ist nun ein nobel gekleideter""\n"
                               "Mann zu sehen. Er scheint dich nun auch zu""\n"
@@ -153,4 +164,70 @@ class Events:
                     else:
                         self.stillgoing = False
                         pass
+        elif self.eventloc[0] == 2:                #Wiese
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 3:                #Wald
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 4:                #Berge
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 5:                #Steppe
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 6:                #Dorf
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 7:                #Wüste
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 8:                #Hügel
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 9:                #Lavasee
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 10:                #Geröllebene
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 11:                #Friedhof
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
+        elif self.eventloc[0] == 12:                #Burg
+            if self.eventloc[1] == 0:
+                print("Händler (Platzhalter)")
+                self.stillgoing = False
+                input(">")
+                return
                         

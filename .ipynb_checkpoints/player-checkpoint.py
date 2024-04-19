@@ -10,7 +10,7 @@ class Player:
         self.maxhp = random.randint(10,15)
         self.currenthp = self.maxhp
         self.hastitle = False
-        self.titlerep = 0 #0 --> neutral; 1 --> lächerlich; 2 --> heftig
+        self.titlerep = 0 #-2/-1/0/1/2
         self.xp = 0
         self.currentxp = 0
         self.lvl = 1
@@ -133,6 +133,10 @@ class Player:
                     self.hasrweapon = True
                     self.rweapon = weapon
                     print(weapon.name + " wurde rechts ausgerüstet")
+                else:
+                    if forced:
+                        self.haslweapon = True
+                        self.lweapon = weapon
         else:
             print(weapon.name + " wurde nicht ausgerüstet")
 

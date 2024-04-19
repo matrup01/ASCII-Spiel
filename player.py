@@ -133,6 +133,10 @@ class Player:
                     self.hasrweapon = True
                     self.rweapon = weapon
                     print(weapon.name + " wurde rechts ausgerüstet")
+                else:
+                    if forced:
+                        self.haslweapon = True
+                        self.lweapon = weapon
         else:
             print(weapon.name + " wurde nicht ausgerüstet")
 
