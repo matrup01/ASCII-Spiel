@@ -7,8 +7,8 @@ class Enemy:
         self.maxhp = hp
         self.name = name
         self.currenthp = hp
-        self.lweapon = items.Weapon(0,0)
-        self.haslweapon = False
+        self.lweapon = items.Sword(1,0)
+        self.haslweapon = True
         self.rweapon = items.Weapon(0,0)
         self.hasrweapon = False
         self.armor = items.Armor(0,1)
@@ -36,7 +36,7 @@ class Enemy:
             self.lweapon.stats = [atk,0,acc,poison,burn,blut,0,0,stun,spezial,lifesteal,0]
         else:
             if not hidden:
-                self.show[0] = True
+                self.show[1] = True
             self.hasrweapon = True
             self.rweapon = items.Sword(0,0)
             self.rweapon.name = self.colorer.returncolor(name,color)
@@ -44,12 +44,12 @@ class Enemy:
             self.rweapon.stats = [atk,0,acc,poison,burn,blut,0,0,stun,spezial,lifesteal,0]
 
     def equipshield(self,name,defense,pos = "r",color = 16,acc = 0.95,reflect = 0,thorns = 0,spezial = 0,hidden = False):
-        if self.pos == "l":
+        if pos == "l":
             if not hidden:
-                self.show[1] = True
+                self.show[0] = True
             self.haslweapon = True
             self.lweapon = items.Shield(0,0)
-            self.lweapon.name = self.returncolor(name,color)
+            self.lweapon.name = self.colorer.returncolor(name,color)
             self.lweapon.power = defense
             self.lweapon.stats = [0,defense,acc,0,0,0,reflect,thorns,0,spezial,0,0]
         else:
@@ -57,7 +57,7 @@ class Enemy:
                 self.show[1] = True
             self.hasrweapon = True
             self.rweapon = items.Shield(0,0)
-            self.rweapon.name = self.returncolor(name,color)
+            self.rweapon.name = self.colorer.returncolor(name,color)
             self.rweapon.power = defense
             self.rweapon.stats = [0,defense,acc,0,0,0,reflect,thorns,0,spezial,0,0]
 
@@ -101,12 +101,12 @@ class Enemy:
 
     def loot(self,player):
         equip = [1,2,3,4,5]
-        weights = [0,0,0,0,0]
+        weight = [0,0,0,0,0]
         for i in range(len(self.show)):
             if self.show[i]:
-                weights[i] = 1
-        loot = random.choices(equip,weights=weights)
-        print("Test")
+                weight[i] = 1
+        loot = random.choices(equip,weights=weight)
+        loot = loot[0]
         if loot == 1:
             print("Der Gegner hat eine seiner Waffen fallen gelassen")
             player.equipweapon(self.lweapon)
@@ -128,12 +128,12 @@ class Enemy:
         tylecounter = (length - 2) * relhp
         tylecounter = int(round(tylecounter))
         dashcounter = length - 2 - tylecounter
-        hplen = len(str(self.currenthp)) + len(str(self.maxhp))
+        hplen = len(str(int(round(self.currenthp,0)))) + len(str(self.maxhp))
         hplennorm4 = 4 - hplen
         offset = offset + hplennorm4
         output = offset * " "
         output += "|"
         output += self.colorer.returncolor(" ",17) * tylecounter
         output += "-" * dashcounter
-        output += "|"
+        output += "|" + str(hplen)
         return output

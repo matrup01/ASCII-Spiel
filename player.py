@@ -65,7 +65,7 @@ class Player:
         tylecounter = (length - 2) * relhp
         tylecounter = int(round(tylecounter))
         dashcounter = length - 2 - tylecounter
-        hplen = len(str(self.currenthp)) + len(str(self.maxhp))
+        hplen = len(str(int(round(self.currenthp,0)))) + len(str(self.maxhp))
         hplennorm4 = 4 - hplen
         offset = offset + hplennorm4
         output = offset * " "

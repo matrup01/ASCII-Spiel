@@ -11,6 +11,7 @@ class Weapon:                                      #Weapons
         self.colorer = colors.Colormap()
         self.namegen = namegenerator.Names()
         self.name = ""
+        self.type = ""
         self.hasname = False
         
 
@@ -34,7 +35,8 @@ class Weapon:                                      #Weapons
         if self.stats[7] > 0:
             print(offset + self.colorer.returncolor("Dornen:       ",11) + str(self.stats[7]))
         if self.stats[8] > 0 :
-            print(offset + self.colorer.returncolor("Betäubung:    ",14) + str(self.stats[8]))
+            prozentstun = int(round(self.stats[8] * 100,0))
+            print(offset + self.colorer.returncolor("Betäubung:    ",14) + str(prozentstun) + "%")
         if self.stats[9] == 1:
             print(offset + self.colorer.returncolor("Giftheilung",4))
         if self.stats[10] > 0:
@@ -45,6 +47,7 @@ class Weapon:                                      #Weapons
 class Sword(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
+        self.type = "off"
         self.stats[0] = self.power
         if self.rareness == 3:
             self.hasname = True
@@ -97,6 +100,7 @@ class Shield(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
         self.stats[1] = self.power
+        self.type = "def"
         if self.rareness == 3:
             self.hasname = True
             self.name = self.colorer.returncolor(self.namegen.shieldname(),6)
@@ -139,6 +143,7 @@ class Shield(Weapon):
 class Axe(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
+        self.type = "off"
         self.stats[0] = self.power
         if self.rareness == 3:
             self.hasname = True
@@ -157,7 +162,7 @@ class Axe(Weapon):
             if choice == 0:
                 self.stats[5] += j
             elif choice == 1:
-                self.stats[8] += 1
+                self.stats[8] += 0.2
             elif choice == 2:
                 self.stats[0] += (2 * j)
 
@@ -185,6 +190,7 @@ class Axe(Weapon):
 class Dagger(Weapon):
     def __init__(self,power,rareness):
         super().__init__(power,rareness)
+        self.type = "off"
         self.stats[0] = self.power
         if self.rareness == 3:
             self.hasname = True
@@ -227,7 +233,10 @@ class Dagger(Weapon):
 class Armor:
     def __init__(self,power,rareness):
         self.rareness = rareness
-        self.defense = power * self.rareness
+        if self.rareness == 0:
+            self.defense = int(round(power * 0.5,0))
+        else:
+            self.defense = power * self.rareness
         self.name = ""
         self.colorer = colors.Colormap()
         self.upgradetimes = 0

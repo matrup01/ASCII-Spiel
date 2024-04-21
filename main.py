@@ -56,7 +56,7 @@ def line(length,offset):
 def clear():
     os.system("cls")
     print("  " + player.titlename + " von " + realm + " (Lvl.: " + str(player.lvl) + "): ")
-    print("  HP: " + str(player.currenthp) + "/" + str(player.maxhp) + player.gethealthbar(3,29))
+    print("  HP: " + str(int(round(player.currenthp,0))) + "/" + str(player.maxhp) + player.gethealthbar(3,29))
     print("  XP: " + str(player.xp) + player.getxpbar(7,29))
     if player.gold < 10:
         offset1 = "   "

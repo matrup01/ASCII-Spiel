@@ -35,7 +35,8 @@ class Weapon:                                      #Weapons
         if self.stats[7] > 0:
             print(offset + self.colorer.returncolor("Dornen:       ",11) + str(self.stats[7]))
         if self.stats[8] > 0 :
-            print(offset + self.colorer.returncolor("Betäubung:    ",14) + str(self.stats[8]))
+            prozentstun = int(round(self.stats[8] * 100,0))
+            print(offset + self.colorer.returncolor("Betäubung:    ",14) + str(prozentstun) + "%")
         if self.stats[9] == 1:
             print(offset + self.colorer.returncolor("Giftheilung",4))
         if self.stats[10] > 0:
@@ -161,7 +162,7 @@ class Axe(Weapon):
             if choice == 0:
                 self.stats[5] += j
             elif choice == 1:
-                self.stats[8] += 1
+                self.stats[8] += 0.2
             elif choice == 2:
                 self.stats[0] += (2 * j)
 
